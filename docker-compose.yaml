@@ -1,0 +1,26 @@
+version: '3'
+services:
+  database:
+    image: 'mariadb:latest'
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'books_api'
+      MYSQL_USER: 'nest'
+      MYSQL_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+        - 'mariadb:/var/lib/mysql'
+    networks:
+        - nest
+    healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-p"]
+        retries: 3
+        timeout: 5s
+networks:
+    nest:
+        driver: bridge
+volumes:
+    mariadb:
+        driver: local
