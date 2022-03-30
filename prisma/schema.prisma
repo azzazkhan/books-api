@@ -10,20 +10,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
+model User {
   id         Int      @id @default(autoincrement())
   name       String
   email      String
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@map("users")
 }
 
-model bookmarks {
+model Bookmark {
   id          Int      @id @default(autoincrement())
   title       String
   description String?
   link        String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
+
+  @@map("bookmarks")
 }
