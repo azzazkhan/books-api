@@ -1,11 +1,10 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-interface Request {
-  email: string;
-  password: string;
-}
+class RegistrationValidator {
+  @IsString({ message: 'Invalid characters passed in name!' })
+  @IsNotEmpty({ message: 'Name is required!' })
+  name: string;
 
-class RegistrationValidator implements Request {
   @IsEmail(undefined, { message: 'An invalid email was provided!' })
   @IsNotEmpty({ message: 'Email is required!' })
   email: string;
