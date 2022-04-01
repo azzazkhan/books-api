@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { loginRequest, registrationRequest } from './validations';
 import { hash, verify } from 'argon2';
-import { PrismaError } from 'types/Prisma';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
@@ -25,7 +25,7 @@ export class AuthService {
       });
       return user;
     } catch (error) {
-      if (error instanceof PrismaError) {
+      if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002')
           throw new ForbiddenException(
             'Email already linked to another account!',
