@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "dev:old": "rimraf dist && nest start --watch",
+    "dev:force": "rimraf node_modules && yarn install && yarn run dev",
     "dev": "yarn prebuild && yarn migrate:dev && yarn start:dev",
     "start": "nest start",
     "start:dev": "nest start --watch",
