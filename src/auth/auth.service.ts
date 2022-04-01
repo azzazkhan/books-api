@@ -50,6 +50,6 @@ export class AuthService {
     if (!(await verify(user.password, password)))
       throw new ForbiddenException('Invalid email or password!');
 
-    return '';
+    return user;
   }
 }
