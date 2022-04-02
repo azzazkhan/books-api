@@ -1,10 +1,10 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { loginRequest, registrationRequest } from './validations';
-import { hash, verify } from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { hash, verify } from 'argon2';
+import { PrismaService } from '../prisma/prisma.service';
+import { loginRequest, registrationRequest } from './validations';
 @Injectable()
 export class AuthService {
   constructor(

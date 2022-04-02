@@ -1,5 +1,12 @@
 import { AuthService } from './auth.service';
-import { Body, Controller, Header, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Header,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { loginRequest, registrationRequest } from './validations';
 
 @Controller()
@@ -13,6 +20,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   @Header('Cache-Control', 'none')
   login(@Body() data: loginRequest) {
     return this.authService.login(data);
