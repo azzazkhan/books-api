@@ -1,3 +1,3 @@
-import ProfileUpdateValidator from './update';
+import UpdateProfileValidator from './update';
 
-export { ProfileUpdateValidator as UpdateProfileRequest };
+export { UpdateProfileValidator as UpdateProfileRequest };

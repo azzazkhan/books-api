@@ -1,6 +1,6 @@
 import { IsEmail, IsOptional, IsString } from 'class-validator';
 
-class ProfileUpdateValidator {
+class UpdateProfileValidator {
   @IsString({ message: 'Invalid characters passed in name!' })
   @IsOptional()
   name?: string;
@@ -14,4 +14,4 @@ class ProfileUpdateValidator {
   password?: string;
 }
 
-export default ProfileUpdateValidator;
+export default UpdateProfileValidator;
