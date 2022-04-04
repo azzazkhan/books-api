@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -21,6 +21,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         id,
       },
     });
+
+    if (!user) throw new ForbiddenException('Invalid token provided');
 
     return user;
   }

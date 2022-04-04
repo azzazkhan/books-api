@@ -7,7 +7,7 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
-import { loginRequest, registrationRequest } from './validations';
+import { LoginRequest, RegistrationRequest } from './validations';
 
 @Controller()
 export class AuthController {
@@ -15,14 +15,14 @@ export class AuthController {
 
   @Post('register')
   @Header('Cache-Control', 'none')
-  register(@Body() data: registrationRequest) {
+  register(@Body() data: RegistrationRequest) {
     return this.authService.register(data);
   }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @Header('Cache-Control', 'none')
-  login(@Body() data: loginRequest) {
+  login(@Body() data: LoginRequest) {
     return this.authService.login(data);
   }
 }

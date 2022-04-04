@@ -3,7 +3,8 @@ import { Test } from '@nestjs/testing';
 import { PrismaService } from '../../src/prisma/prisma.service';
 import { AppModule } from '../../src/app.module';
 import * as pactum from 'pactum';
-import { registrationRequest } from 'src/auth/validations';
+import { RegistrationRequest } from '../../src/auth/validations';
+import { UpdateProfileRequest } from '../../src/user/validations';
 
 describe('E2E Route Tests', () => {
   let app: INestApplication;
@@ -41,7 +42,7 @@ describe('E2E Route Tests', () => {
   afterAll(() => app.close());
 
   describe('Authentication', () => {
-    const data: registrationRequest = {
+    const data: RegistrationRequest = {
       name: 'Lorem User',
       email: 'someone@example.com',
       password: 'lorem-password-123',
@@ -129,12 +130,27 @@ describe('E2E Route Tests', () => {
   });
 
   describe('User operations', () => {
-    it('Can fetch own profile', () => {
+    it('Can fetch their profile', () => {
       return pactum
         .spec()
-        .post('user/profile')
+        .get('user/profile')
         .expectStatus(200)
-        .stores('token', 'token');
+        .withHeaders({ Authorization: 'Bearer $S{token}' });
+    });
+
+    it('Can edit their profile', () => {
+      const data: UpdateProfileRequest = {
+        name: 'Example User',
+        email: 'someone@example.com',
+      };
+      return pactum
+        .spec()
+        .patch('user/profile')
+        .expectStatus(200)
+        .withBody(data)
+        .withHeaders({ Authorization: 'Bearer $S{token}' })
+        .expectBodyContains(data.name)
+        .expectBodyContains(data.email);
     });
   });
   // describe('Bookmarks management', () => undefined);
